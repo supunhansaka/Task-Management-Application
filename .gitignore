@@ -1,0 +1,86 @@
+# Ignore Visual Studio temporary files, build results, and
+# user-specific files
+
+# Build results
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# VS Code settings
+.vscode/
+
+# User-specific files
+*.userprefs
+
+# Logs
+*.log
+
+# Database files
+*.mdf
+*.ldf
+*.ndf
+*.db
+
+# Resharper files
+_ReSharper*/
+*.DotSettings.user
+
+# NCrunch files
+_NCrunch_*
+*.ncrunch*
+
+# DotCover files
+*.dotCover
+
+# Backup & report files
+*.orig
+*.rej
+
+# Rider files
+.idea/
+
+# JetBrains Rider caches
+.idea/
+
+# DotNet CLI
+project.lock.json
+project.fragment.lock.json
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Package restore results
+project.assets.json
+*.csproj.user
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Auto-generated debug files
+*.pdb
+
+# Publish folder
+publish/
+
+# Miscellaneous
+Thumbs.db
+desktop.ini
+
+# Environment-specific
+.env
+.env.*.local
