@@ -1,0 +1,37 @@
+.task-list-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  input {
+    flex: 1;
+    margin-right: 1rem;
+    padding: 0.5rem;
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+  }
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &.completed {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    button {
+      margin-left: 1rem;
+    }
+  }
+}

@@ -7,7 +7,7 @@ using TaskManagement.API.Data;
 
 namespace TaskManagement.Application.Services;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly AppDbContext _dbContext;
@@ -26,9 +26,9 @@ public class AuthService
         if (user != null)
         {
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, username)
-        };
+            {
+                new Claim(ClaimTypes.Name, username)
+            };
 
             var identity = new ClaimsIdentity(claims, "MyCookieAuth");
             var principal = new ClaimsPrincipal(identity);
@@ -47,8 +47,16 @@ public class AuthService
         await _httpContextAccessor.HttpContext!.SignOutAsync("MyCookieAuth");
     }
 
-    public string? GetCurrentUser()
+    public bool IsUserLoggedIn(ClaimsPrincipal user, out string? username)
     {
-        return _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+        username = null;
+
+        if (user.Identity != null && user.Identity.IsAuthenticated)
+        {
+            username = user.Identity.Name;
+            return true;
+        }
+
+        return false;
     }
 }

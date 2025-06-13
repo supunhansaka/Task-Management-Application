@@ -1,0 +1,8 @@
+<div class="dashboard-container">
+    <div class="task-list-panel">
+      <app-task-list (taskSelected)="selectedTask = $event"></app-task-list>
+    </div>
+    <div class="task-form-panel">
+      <app-task-form [taskToEdit]="selectedTask"></app-task-form>
+    </div>
+  </div>

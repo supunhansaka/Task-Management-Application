@@ -1,0 +1,23 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Title:</label>
+      <input type="text" formControlName="title" />
+    </div>
+  
+    <div>
+      <label>Description:</label>
+      <textarea formControlName="description"></textarea>
+    </div>
+  
+    <div>
+      <label>
+        <input type="checkbox" formControlName="isCompleted" />
+        Completed
+      </label>
+    </div>
+  
+    <button type="submit" [disabled]="taskForm.invalid">
+      {{ taskToEdit ? 'Update Task' : 'Add Task' }}
+    </button>
+  </form>
+  

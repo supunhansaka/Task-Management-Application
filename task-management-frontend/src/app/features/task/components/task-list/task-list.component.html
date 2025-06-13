@@ -1,0 +1,27 @@
+<div class="task-list-header">
+    <input
+      type="text"
+      placeholder="Filter tasks"
+      [formControl]="filterControl"
+    />
+    <button (click)="toggleSort()">Sort {{ sortAscending ? '▲' : '▼' }}</button>
+  </div>
+  
+  <ul class="task-list">
+    @for (task of filteredTasks; track task.id) {
+      <li [class.completed]="task.isCompleted">
+        <div (click)="selectTask(task)">
+          <strong>{{ task.title }}</strong> - {{ task.description }}
+        </div>
+        <button (click)="deleteTask(task.id)">Delete</button>
+      </li>
+    }
+  </ul>
+
+  <div class="pagination">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage * pageSize >= totalCount">Next</button>
+  </div>
+
+  

@@ -11,18 +11,23 @@ namespace TaskManagement.API.Controllers;
 [Route("api/[controller]")]
 public class TasksController : ControllerBase
 {
-    private readonly TaskService _taskService;
+    private readonly ITaskService _taskService;
 
-    public TasksController(TaskService taskService)
+    public TasksController(ITaskService taskService)
     {
         _taskService = taskService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpGet()]
+    public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        var tasks = await _taskService.GetAllAsync();
-        return Ok(tasks);
+        var (totalCount, items) = await _taskService.GetAllAsync(pageNumber, pageSize);
+
+        return Ok(new
+        {
+            totalCount,
+            items
+        });
     }
 
     [HttpGet("{id}")]
