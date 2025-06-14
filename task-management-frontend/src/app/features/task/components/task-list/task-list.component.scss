@@ -209,6 +209,18 @@
   margin-right: 0.2em;
 }
 
+.task-list li.completed {
+  background-color: rgba(40, 167, 69, 0.10); /* slightly more green */
+  border-left: 5px solid var(--success-color);
+  box-shadow: 0 1px 6px 0 rgba(40, 167, 69, 0.07);
+}
+.task-list li.completed .task-title,
+.task-list li.completed .task-desc,
+.task-list li.completed .pill {
+  // font-style: italic;
+  opacity: 0.85;
+}
+
 @media (max-width: 576px) {
   .task-list-header {
     flex-direction: column;
