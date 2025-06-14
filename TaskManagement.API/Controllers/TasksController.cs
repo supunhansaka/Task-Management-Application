@@ -20,7 +20,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
     {
         _logger.LogInformation("Fetching tasks: Page {PageNumber}, Size {PageSize}", pageNumber, pageSize);
         var (totalCount, items) = await _taskService.GetAllAsync(pageNumber, pageSize);

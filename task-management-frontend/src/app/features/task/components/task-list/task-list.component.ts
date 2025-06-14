@@ -14,11 +14,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TaskListComponent implements OnInit {
   currentPage = 1;
-  pageSize = 10;
+  pageSize = 5;
   totalCount = 0;
   totalPages = 0;
   // tasks: TaskItem[] = [];
   sortAscending = true;
+  Math = Math; // Add Math for template use
 
   filterControl = new FormControl('');
   @Input() tasks: TaskItem[] = [];

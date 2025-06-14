@@ -58,7 +58,6 @@ export class TaskFormComponent implements OnChanges {
   }
 
   async onSubmit() {
-    console.log(this.taskForm.value, 'submitting');
     if (this.taskForm.valid) {
       const data = {
         ...this.taskForm.value,

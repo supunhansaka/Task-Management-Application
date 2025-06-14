@@ -1,28 +1,72 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-  <input formControlName="title" placeholder="Title" />
-  <input formControlName="description" placeholder="Description" />
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input 
+      id="title"
+      type="text" 
+      formControlName="title" 
+      placeholder="Enter task title"
+      [class.is-invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+    />
+    <div class="invalid-feedback" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+      Title is required
+    </div>
+  </div>
 
-  <label *ngIf="taskToEdit">
-    Status:
-    <select formControlName="status">
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea 
+      id="description"
+      formControlName="description" 
+      placeholder="Enter task description"
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select 
+      id="status"
+      formControlName="status"
+      *ngIf="taskToEdit"
+    >
       <option *ngFor="let s of taskStatuses" [value]="s">{{ s }}</option>
     </select>
-  </label>
+  </div>
 
-  <label>
-    Priority:
-    <select formControlName="priority">
+  <div class="form-group">
+    <label for="priority">Priority</label>
+    <select 
+      id="priority"
+      formControlName="priority"
+      [class.is-invalid]="taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched"
+    >
       <option *ngFor="let p of taskPriorities" [value]="p">{{ p }}</option>
     </select>
-  </label>
+    <div class="invalid-feedback" *ngIf="taskForm.get('priority')?.invalid && taskForm.get('priority')?.touched">
+      Priority is required
+    </div>
+  </div>
 
-  <label>
-    Due Date:
-    <input type="date" formControlName="dueDate" [value]="taskToEdit?.dueDate | date:'yyyy-MM-dd'" />
-  </label>
+  <div class="form-group">
+    <label for="dueDate">Due Date</label>
+    <input 
+      id="dueDate"
+      type="date" 
+      formControlName="dueDate" 
+      [value]="taskToEdit?.dueDate | date:'yyyy-MM-dd'"
+      [class.is-invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
+    />
+    <div class="invalid-feedback" *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">
+      Due date is required
+    </div>
+  </div>
 
-  <button type="submit">{{ taskToEdit ? 'Update' : 'Add' }}</button>
-  <button *ngIf="taskToEdit" type="button" (click)="cancelEdit()">Close</button>
+  <div class="form-actions">
+    <button type="submit" [disabled]="taskForm.invalid">
+      {{ taskToEdit ? 'Update Task' : 'Add Task' }}
+    </button>
+    <button *ngIf="taskToEdit" type="button" (click)="cancelEdit()">Cancel</button>
+  </div>
 </form>
 
   

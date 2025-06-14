@@ -24,7 +24,7 @@ export class DashboardComponent {
 
   async loadTasks() {
     try {
-      const result = await this.taskService.getTasks(1, 10);
+      const result = await this.taskService.getTasks(1, 5);
       this.tasks = result.items;
     } catch (error) {
       this.toastr.error('Failed to load tasks');

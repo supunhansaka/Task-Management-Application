@@ -1,35 +1,64 @@
 <div class="task-list-header">
-    <input
-      type="text"
-      placeholder="Filter tasks"
-      [formControl]="filterControl"
-    />
-    <button (click)="toggleSort()">Sort {{ sortAscending ? '▲' : '▼' }}</button>
-  </div>
-  
-  <ul class="task-list">
-    <li *ngFor="let task of filteredTasks">
-      <div>
-        <strong>{{ task.title }}</strong> - {{ task.description }}<br />
-        <small>Status: {{ task.status }} | Priority: {{ task.priority }} | Due: {{ task.dueDate | date }}</small>
-      </div>
-    
-      <button (click)="onEdit(task)">Edit</button>
-    
-      <ng-container>
-        <button *ngIf="task.status === 'Open' || task.status === 'InProgress'" (click)="markAsCompleted(task.id)">
-          Mark as Completed
-        </button>
-        <span *ngIf="task.status === 'Completed'">✅ Completed</span>
-      </ng-container>      
-      <button (click)="deleteTask(task.id)">Delete</button>
-    </li>
-  </ul>
+  <input
+    type="text"
+    placeholder="Search tasks..."
+    [formControl]="filterControl"
+  />
+  <button (click)="toggleSort()">
+    <i class="fas" [class.fa-sort-up]="sortAscending" [class.fa-sort-down]="!sortAscending"></i>
+    Sort {{ sortAscending ? 'A-Z' : 'Z-A' }}
+  </button>
+</div>
 
-  <div class="pagination">
-    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-    <span>Page {{ currentPage }}</span>
-    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage * pageSize >= totalCount">Next</button>
-  </div>
+<ul class="task-list">
+  <li *ngFor="let task of filteredTasks" [class.completed]="task.status === 'Completed'">
+    <div>
+      <strong>{{ task.title }}</strong>
+      <p>{{ task.description }}</p>
+      <small>
+        <span class="status">Status: {{ task.status }}</span> |
+        <span class="priority">Priority: {{ task.priority }}</span> |
+        <span class="due-date">Due: {{ task.dueDate | date }}</span>
+      </small>
+    </div>
+
+    <div class="task-actions">
+      <button class="edit-btn" (click)="onEdit(task)">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+
+      <ng-container *ngIf="task.status !== 'Completed'">
+        <button class="complete-btn" (click)="markAsCompleted(task.id)">
+          <i class="fas fa-check"></i> Complete
+        </button>
+      </ng-container>
+
+      <button class="delete-btn" (click)="deleteTask(task.id)">
+        <i class="fas fa-trash"></i> Delete
+      </button>
+    </div>
+  </li>
+</ul>
+
+<div class="pagination" *ngIf="totalCount > 0 && filteredTasks.length > 0">
+  <button 
+    (click)="goToPage(currentPage - 1)" 
+    [disabled]="currentPage === 1"
+  >
+    <i class="fas fa-chevron-left"></i> Previous
+  </button>
+  <span>Page {{ currentPage }} of {{ Math.ceil(totalCount / pageSize) }}</span>
+  <button 
+    (click)="goToPage(currentPage + 1)" 
+    [disabled]="currentPage * pageSize >= totalCount"
+  >
+    Next <i class="fas fa-chevron-right"></i>
+  </button>
+</div>
+
+<div class="no-tasks" *ngIf="filteredTasks.length === 0">
+  <p>No tasks found</p>
+  <small *ngIf="filterControl.value">Try adjusting your search</small>
+</div>
 
   
