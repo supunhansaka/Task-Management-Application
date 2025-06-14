@@ -36,7 +36,7 @@ public class AppDbContext : DbContext
             new User
             {
                 Id = 1,
-                Username = "admin",
+                Username = "supun",
                 Password = "password"
             }
         );

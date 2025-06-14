@@ -12,7 +12,7 @@ using TaskManagement.API.Data;
 namespace TaskManagement.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250614173732_initialCreate")]
+    [Migration("20250614215350_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -314,7 +314,7 @@ namespace TaskManagement.API.Migrations
                         {
                             Id = 1,
                             Password = "password",
-                            Username = "admin"
+                            Username = "supun"
                         });
                 });
 

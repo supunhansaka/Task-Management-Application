@@ -311,7 +311,7 @@ namespace TaskManagement.API.Migrations
                         {
                             Id = 1,
                             Password = "password",
-                            Username = "admin"
+                            Username = "supun"
                         });
                 });
 

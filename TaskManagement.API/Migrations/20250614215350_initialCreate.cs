@@ -56,7 +56,7 @@ namespace TaskManagement.API.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Password", "Username" },
-                values: new object[] { 1, "password", "admin" });
+                values: new object[] { 1, "password", "supun" });
 
             migrationBuilder.InsertData(
                 table: "Tasks",
