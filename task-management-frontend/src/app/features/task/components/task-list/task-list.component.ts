@@ -1,13 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { TaskItem } from '../../interfaces/task';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   standalone: true,
   selector: 'app-task-list',
-  imports: [CommonModule, ReactiveFormsModule],  // Only ReactiveFormsModule now!
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
@@ -16,13 +17,15 @@ export class TaskListComponent implements OnInit {
   pageSize = 10;
   totalCount = 0;
   totalPages = 0;
-  tasks: TaskItem[] = [];
+  // tasks: TaskItem[] = [];
   sortAscending = true;
 
   filterControl = new FormControl('');
+  @Input() tasks: TaskItem[] = [];
   @Output() taskSelected = new EventEmitter<TaskItem>();
+  @Output() refresh = new EventEmitter<void>();
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private toastr: ToastrService) {}
 
   async ngOnInit() {
     await this.loadTasks();
@@ -34,9 +37,13 @@ export class TaskListComponent implements OnInit {
   }
 
   async loadTasks() {
-    const result = await this.taskService.getTasks(this.currentPage, this.pageSize);
-    this.tasks = result.items;
-    this.totalCount = result.totalCount;
+    try {
+      const result = await this.taskService.getTasks(this.currentPage, this.pageSize);
+      this.tasks = result.items;
+      this.totalCount = result.totalCount;
+    } catch (error) {
+      this.toastr.error('Failed to load tasks');
+    }
   }
 
   goToPage(page: number) {
@@ -49,7 +56,12 @@ export class TaskListComponent implements OnInit {
   }
 
   async deleteTask(id: number) {
-    await this.taskService.deleteTask(id);
+    try {
+      await this.taskService.deleteTask(id);
+      this.toastr.success('Task deleted successfully');
+    } catch (error) {
+      this.toastr.error('Failed to delete task');
+    }
     await this.loadTasks();
   }
 
@@ -67,5 +79,19 @@ export class TaskListComponent implements OnInit {
     return this.tasks.filter(task =>
       task.title.toLowerCase().includes(filter)
     );
+  }
+
+  onEdit(task: TaskItem) {
+    this.taskSelected.emit(task);
+  }
+  
+  async markAsCompleted(taskId: number) {
+    try {
+      await this.taskService.markAsCompleted(taskId);
+      this.toastr.success('Task marked as completed');
+      this.loadTasks();
+    } catch {
+      this.toastr.error('Failed to update task completion status.');
+    }
   }
 }

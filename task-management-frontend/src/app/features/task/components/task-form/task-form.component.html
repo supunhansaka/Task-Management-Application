@@ -1,23 +1,28 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>Title:</label>
-      <input type="text" formControlName="title" />
-    </div>
-  
-    <div>
-      <label>Description:</label>
-      <textarea formControlName="description"></textarea>
-    </div>
-  
-    <div>
-      <label>
-        <input type="checkbox" formControlName="isCompleted" />
-        Completed
-      </label>
-    </div>
-  
-    <button type="submit" [disabled]="taskForm.invalid">
-      {{ taskToEdit ? 'Update Task' : 'Add Task' }}
-    </button>
-  </form>
+  <input formControlName="title" placeholder="Title" />
+  <input formControlName="description" placeholder="Description" />
+
+  <label *ngIf="taskToEdit">
+    Status:
+    <select formControlName="status">
+      <option *ngFor="let s of taskStatuses" [value]="s">{{ s }}</option>
+    </select>
+  </label>
+
+  <label>
+    Priority:
+    <select formControlName="priority">
+      <option *ngFor="let p of taskPriorities" [value]="p">{{ p }}</option>
+    </select>
+  </label>
+
+  <label>
+    Due Date:
+    <input type="date" formControlName="dueDate" [value]="taskToEdit?.dueDate | date:'yyyy-MM-dd'" />
+  </label>
+
+  <button type="submit">{{ taskToEdit ? 'Update' : 'Add' }}</button>
+  <button *ngIf="taskToEdit" type="button" (click)="cancelEdit()">Close</button>
+</form>
+
   

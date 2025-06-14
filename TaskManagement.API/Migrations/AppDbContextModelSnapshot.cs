@@ -36,8 +36,16 @@ namespace TaskManagement.API.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -46,7 +54,12 @@ namespace TaskManagement.API.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
 
@@ -56,160 +69,220 @@ namespace TaskManagement.API.Migrations
                             Id = 1,
                             CreatedAt = new DateTime(2024, 6, 1, 12, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Setup project to code.",
-                            IsCompleted = false,
-                            Title = "Prepare project structure"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Prepare project structure",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2024, 6, 2, 9, 30, 0, 0, DateTimeKind.Utc),
                             Description = "Add business logic for Tasks.",
-                            IsCompleted = false,
-                            Title = "Implement TaskService"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Implement TaskService",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2024, 6, 3, 15, 45, 0, 0, DateTimeKind.Utc),
                             Description = "Add data seeding for Tasks and Users.",
-                            IsCompleted = true,
-                            Title = "Seed initial data"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Seed initial data",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2024, 6, 4, 10, 15, 0, 0, DateTimeKind.Utc),
                             Description = "Implement simple username/password authentication with cookies.",
-                            IsCompleted = true,
-                            Title = "Implement Authentication"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Implement Authentication",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2024, 6, 5, 14, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Develop login form with validation and SCSS styling.",
-                            IsCompleted = false,
-                            Title = "Create Login Page UI"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Create Login Page UI",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2024, 6, 6, 16, 20, 0, 0, DateTimeKind.Utc),
                             Description = "Implement sorting of tasks by title.",
-                            IsCompleted = false,
-                            Title = "Add task list sorting"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Add task list sorting",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 7,
                             CreatedAt = new DateTime(2024, 6, 7, 11, 5, 0, 0, DateTimeKind.Utc),
                             Description = "Implement search/filtering for task list.",
-                            IsCompleted = true,
-                            Title = "Add task filtering"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Add task filtering",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 8,
                             CreatedAt = new DateTime(2024, 6, 8, 13, 50, 0, 0, DateTimeKind.Utc),
                             Description = "Display task list and task form side by side.",
-                            IsCompleted = false,
-                            Title = "Build Dashboard Page"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Build Dashboard Page",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 9,
                             CreatedAt = new DateTime(2024, 6, 9, 17, 40, 0, 0, DateTimeKind.Utc),
                             Description = "Make Dashboard responsive for mobile devices.",
-                            IsCompleted = false,
-                            Title = "Style Dashboard for Mobile"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Style Dashboard for Mobile",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 10,
                             CreatedAt = new DateTime(2024, 6, 10, 9, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Test all user flows and fix any bugs.",
-                            IsCompleted = false,
-                            Title = "Test Full Application"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Test Full Application",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 11,
                             CreatedAt = new DateTime(2024, 6, 11, 12, 30, 0, 0, DateTimeKind.Utc),
                             Description = "Allow user to logout and clear session.",
-                            IsCompleted = true,
-                            Title = "Implement Logout Functionality"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Implement Logout Functionality",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 12,
                             CreatedAt = new DateTime(2024, 6, 12, 15, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Add validation messages to forms.",
-                            IsCompleted = false,
-                            Title = "Improve Form Validation"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Improve Form Validation",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 13,
                             CreatedAt = new DateTime(2024, 6, 13, 10, 45, 0, 0, DateTimeKind.Utc),
                             Description = "Reduce API call overhead and improve performance.",
-                            IsCompleted = false,
-                            Title = "Optimize API Calls"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Optimize API Calls",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 14,
                             CreatedAt = new DateTime(2024, 6, 14, 11, 10, 0, 0, DateTimeKind.Utc),
                             Description = "Show toast messages for success and errors.",
-                            IsCompleted = true,
-                            Title = "Add Toast Notifications"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Add Toast Notifications",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 15,
                             CreatedAt = new DateTime(2024, 6, 15, 9, 20, 0, 0, DateTimeKind.Utc),
                             Description = "Write basic unit tests for services.",
-                            IsCompleted = false,
-                            Title = "Write Unit Tests"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Write Unit Tests",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 16,
                             CreatedAt = new DateTime(2024, 6, 16, 14, 30, 0, 0, DateTimeKind.Utc),
                             Description = "Push code to GitHub and setup CI/CD.",
-                            IsCompleted = true,
-                            Title = "Setup GitHub Repository"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Setup GitHub Repository",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 17,
                             CreatedAt = new DateTime(2024, 6, 17, 16, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Configure deployment to test server.",
-                            IsCompleted = false,
-                            Title = "Configure Deployment"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Configure Deployment",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 18,
                             CreatedAt = new DateTime(2024, 6, 18, 11, 30, 0, 0, DateTimeKind.Utc),
                             Description = "Perform code review and refactoring.",
-                            IsCompleted = false,
-                            Title = "Review Code"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Review Code",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 19,
                             CreatedAt = new DateTime(2024, 6, 19, 10, 10, 0, 0, DateTimeKind.Utc),
                             Description = "Document project setup and usage in README.",
-                            IsCompleted = true,
-                            Title = "Update README"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Update README",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 20,
                             CreatedAt = new DateTime(2024, 6, 20, 13, 0, 0, 0, DateTimeKind.Utc),
                             Description = "Prepare demo for project presentation.",
-                            IsCompleted = false,
-                            Title = "Prepare Project Demo"
+                            DueDate = new DateTime(2024, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Prepare Project Demo",
+                            UserId = 1
                         });
                 });
 
@@ -240,6 +313,22 @@ namespace TaskManagement.API.Migrations
                             Password = "password",
                             Username = "admin"
                         });
+                });
+
+            modelBuilder.Entity("TaskManagement.API.Models.TaskItem", b =>
+                {
+                    b.HasOne("TaskManagement.API.Models.User", "User")
+                        .WithMany("Tasks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TaskManagement.API.Models.User", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

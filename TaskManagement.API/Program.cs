@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using TaskManagement.API.Authentication;
 using TaskManagement.API.Data;
 using TaskManagement.API.Repositories;
 using TaskManagement.API.Services;
@@ -22,12 +24,13 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials();  // VERY IMPORTANT for Cookie-based auth
+              .AllowCredentials();
     });
 });
 
 // HttpContextAccessor and AuthService
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuthContext, AuthContext>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 
@@ -48,7 +51,11 @@ builder.Services.AddAuthentication("MyCookieAuth")
 builder.Services.AddAuthorization();
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

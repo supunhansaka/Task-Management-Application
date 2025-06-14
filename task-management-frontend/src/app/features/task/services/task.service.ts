@@ -49,4 +49,15 @@ export class TaskService {
       this.http.delete<void>(`${this.apiUrl}/tasks/${id}`, { withCredentials: true })
     );
   }
+
+  markAsCompleted(id: number): Promise<TaskItem> {
+    return firstValueFrom(
+      this.http.patch<TaskItem>(
+        `${this.apiUrl}/tasks/${id}/complete`,
+        {},
+        { withCredentials: true }
+      )
+    );
+  }
+  
 }

@@ -13,15 +13,16 @@ public class TaskRepository : ITaskRepository
         _dbContext = dbContext;
     }
 
-    public async Task<int> GetTotalCountAsync()
+    public async Task<int> GetTotalCountAsync(int userId)
     {
-        return await _dbContext.Tasks.CountAsync();
+        return await _dbContext.Tasks.Where(t => t.UserId == userId).CountAsync();
     }
 
-    public async Task<List<TaskItem>> GetAllAsync(int pageNumber, int pageSize)
+    public async Task<List<TaskItem>> GetAllAsync(int pageNumber, int pageSize, int userId)
     {
         return await _dbContext.Tasks
-            .OrderBy(t => t.CreatedAt)
+            .Where(t => t.UserId == userId)
+            .OrderByDescending(t => t.UpdatedAt ?? t.CreatedAt)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

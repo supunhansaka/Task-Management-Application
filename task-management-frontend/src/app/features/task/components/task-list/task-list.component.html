@@ -8,14 +8,22 @@
   </div>
   
   <ul class="task-list">
-    @for (task of filteredTasks; track task.id) {
-      <li [class.completed]="task.isCompleted">
-        <div (click)="selectTask(task)">
-          <strong>{{ task.title }}</strong> - {{ task.description }}
-        </div>
-        <button (click)="deleteTask(task.id)">Delete</button>
-      </li>
-    }
+    <li *ngFor="let task of filteredTasks">
+      <div>
+        <strong>{{ task.title }}</strong> - {{ task.description }}<br />
+        <small>Status: {{ task.status }} | Priority: {{ task.priority }} | Due: {{ task.dueDate | date }}</small>
+      </div>
+    
+      <button (click)="onEdit(task)">Edit</button>
+    
+      <ng-container>
+        <button *ngIf="task.status === 'Open' || task.status === 'InProgress'" (click)="markAsCompleted(task.id)">
+          Mark as Completed
+        </button>
+        <span *ngIf="task.status === 'Completed'">✅ Completed</span>
+      </ng-container>      
+      <button (click)="deleteTask(task.id)">Delete</button>
+    </li>
   </ul>
 
   <div class="pagination">
