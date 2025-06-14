@@ -47,23 +47,29 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Logged out" });
     }
 
-    [HttpGet("status")]
-    public IActionResult Status()
-    {
-        if (_authService.IsUserLoggedIn(User, out var username))
-        {
-            _logger.LogInformation("Status check: user {Username} is authenticated", username);
-            return Ok(new
-            {
-                isLoggedIn = true,
-                username
-            });
-        }
 
-        _logger.LogInformation("Status check: anonymous user (not authenticated)");
-        return Ok(new
+    [HttpGet("context")]
+    public IActionResult GetUserContext()
+    {
+        try
         {
-            isLoggedIn = false
-        });
+            var context = _authService.GetUserContext();
+
+            if (context.IsAuthenticated)
+            {
+                _logger.LogInformation("User context retrieved: {Username} (ID: {UserId})", context.Username, context.UserId);
+            }
+            else
+            {
+                _logger.LogInformation("Anonymous user requested context.");
+            }
+
+            return Ok(context);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error while retrieving user context.");
+            return StatusCode(500, new { message = "Failed to retrieve user context." });
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using TaskManagement.API.DTOs;
 
 namespace TaskManagement.Application.Services;
 
@@ -6,5 +7,5 @@ public interface IAuthService
 {
     Task<bool> SignInAsync(string username, string password);
     Task SignOutAsync();
-    bool IsUserLoggedIn(ClaimsPrincipal user, out string? username);
+    AuthUserContextDto GetUserContext();
 }

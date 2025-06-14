@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginInfo } from './interfaces/auth';
+import { LoginInfo, UserContext } from './interfaces/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -36,20 +36,24 @@ export class AuthService {
     }
   }
 
-  async checkAuthStatus(): Promise<boolean> {
+  async userContext(): Promise<UserContext> {
     try {
       const result = await firstValueFrom(
-        this.http.get<{ isLoggedIn: boolean, username?: string }>(
-          `${this.apiUrl}/auth/status`,
+        this.http.get<UserContext>(
+          `${this.apiUrl}/auth/context`,
           { withCredentials: true }
         )
       );
   
-      this.loggedIn = result.isLoggedIn;
-      return this.loggedIn;
+      this.loggedIn = result.isAuthenticated;
+      return result;
     } catch (error) {
       this.loggedIn = false;
-      return false;
+      return {
+        isAuthenticated: false,
+        username: null,
+        userId: null
+      };
     }
   }
   
