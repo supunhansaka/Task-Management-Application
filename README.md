@@ -53,17 +53,17 @@ Using Visual Studio
 
 ### ✅ 3. Run the Frontend (Angular 20)
 
-cd task-management-frontend
-npm install
-ng serve    
+- cd task-management-frontend
+- npm install
+- ng serve    
 
 
 ## 👤 Default Login Credentials
 
 Use this account to log in:
 
-  Username: supun
-  Password: password
+  - Username: supun
+  - Password: password
 
 ✅ These are seeded into the DB on first migration.
 
