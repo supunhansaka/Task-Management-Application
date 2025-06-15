@@ -1,0 +1,18 @@
+<app-header [username]="username"></app-header>
+
+<div class="dashboard-container">
+  <div class="task-list-panel">
+    <app-task-list
+      (taskSelected)="onEditTask($event)"
+      (refresh)="loadTasks()"
+      [tasks]="tasks"
+    ></app-task-list>
+  </div>
+  <div class="task-form-panel">
+    <app-task-form
+      [taskToEdit]="selectedTask"
+      (formClosed)="onFormClosed()"
+      (taskSaved)="loadTasks()"
+    ></app-task-form>
+  </div>
+</div>

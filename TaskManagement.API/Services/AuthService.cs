@@ -3,19 +3,23 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using TaskManagement.API.Authentication;
 using TaskManagement.API.Data;
+using TaskManagement.API.DTOs;
 
 namespace TaskManagement.Application.Services;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly AppDbContext _dbContext;
+    private readonly IAuthContext _authContext;
 
-    public AuthService(IHttpContextAccessor httpContextAccessor, AppDbContext dbContext)
+    public AuthService(IHttpContextAccessor httpContextAccessor, AppDbContext dbContext, IAuthContext authContext)
     {
         _httpContextAccessor = httpContextAccessor;
         _dbContext = dbContext;
+        _authContext = authContext;
     }
 
     public async Task<bool> SignInAsync(string username, string password)
@@ -26,9 +30,10 @@ public class AuthService
         if (user != null)
         {
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, username)
-        };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, username)
+            };
 
             var identity = new ClaimsIdentity(claims, "MyCookieAuth");
             var principal = new ClaimsPrincipal(identity);
@@ -47,8 +52,13 @@ public class AuthService
         await _httpContextAccessor.HttpContext!.SignOutAsync("MyCookieAuth");
     }
 
-    public string? GetCurrentUser()
+    public AuthUserContextDto GetUserContext()
     {
-        return _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+        return new AuthUserContextDto
+        {
+            IsAuthenticated = _authContext.IsAuthenticated,
+            Username = _authContext.Username,
+            UserId = _authContext.UserId
+        };
     }
 }

@@ -1,0 +1,48 @@
+<div class="login-container">
+  <h2>Welcome Back</h2>
+  <p class="text-muted mb-3">Please sign in to continue</p>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input 
+        id="username" 
+        type="text" 
+        formControlName="username" 
+        placeholder="Enter your username"
+        [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        Username is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input 
+        id="password" 
+        type="password" 
+        formControlName="password" 
+        placeholder="Enter your password"
+        [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        Password is required
+      </div>
+    </div>
+
+    <button 
+      type="submit" 
+      [disabled]="loginForm.invalid"
+      [class.loading]="isLoading"
+    >
+      <span *ngIf="!isLoading">Sign In</span>
+      <span *ngIf="isLoading">Signing in...</span>
+    </button>
+  </form>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ errorMessage }}
+  </div>
+</div>

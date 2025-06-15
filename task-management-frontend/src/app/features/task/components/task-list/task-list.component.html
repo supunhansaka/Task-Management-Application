@@ -1,0 +1,96 @@
+<div class="task-list-header">
+  <div class="search-section">
+    <input
+      type="text"
+      placeholder="Search tasks..."
+      [formControl]="filterControl"
+    />
+  </div>
+  <div class="filter-section">
+    <div class="filter-row">
+      <select [formControl]="statusFilterControl" class="filter-select">
+        <option value="">All Statuses</option>
+        <option *ngFor="let status of taskStatuses" [value]="status">{{ status }}</option>
+      </select>
+      <select [formControl]="priorityFilterControl" class="filter-select">
+        <option value="">All Priorities</option>
+        <option *ngFor="let priority of taskPriorities" [value]="priority">{{ priority }}</option>
+      </select>
+      <button class="reset-btn" (click)="resetFilters()">
+        <i class="fas fa-undo"></i> Reset All
+      </button>
+    </div>
+    <div class="sort-buttons">
+      <button (click)="setSortField('title')" [class.active]="currentSortField === 'title'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'title' && sortAscending" [class.fa-sort-down]="currentSortField === 'title' && !sortAscending"></i>
+        Sort by Title
+      </button>
+      <button (click)="setSortField('status')" [class.active]="currentSortField === 'status'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'status' && sortAscending" [class.fa-sort-down]="currentSortField === 'status' && !sortAscending"></i>
+        Sort by Status
+      </button>
+      <button (click)="setSortField('priority')" [class.active]="currentSortField === 'priority'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'priority' && sortAscending" [class.fa-sort-down]="currentSortField === 'priority' && !sortAscending"></i>
+        Sort by Priority
+      </button>
+      <button (click)="setSortField('dueDate')" [class.active]="currentSortField === 'dueDate'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'dueDate' && sortAscending" [class.fa-sort-down]="currentSortField === 'dueDate' && !sortAscending"></i>
+        Sort by Due Date
+      </button>
+    </div>
+  </div>
+</div>
+
+<ul class="task-list">
+  <li *ngFor="let task of filteredTasks" [class.completed]="task.status === 'Completed'">
+    <div class="task-main-content">
+      <div class="task-title-row">
+        <span class="task-title">{{ task.title }}</span>
+      </div>
+      <div class="task-pill-row">
+        <span class="pill status-pill"><span class="pill-label">Status:</span> {{ task.status }}</span>
+        <span class="pill priority-pill"><span class="pill-label">Priority:</span> {{ task.priority }}</span>
+        <span class="pill due-pill"><span class="pill-label">Due:</span> {{ task.dueDate | date }}</span>
+      </div>
+      <div class="task-desc-row">
+        <span class="task-desc">{{ task.description }}</span>
+      </div>
+    </div>
+    <div class="task-actions">
+      <button class="edit-btn" (click)="onEdit(task)">
+        <i class="fas fa-edit"></i> Edit
+      </button>
+      <ng-container *ngIf="task.status !== 'Completed'">
+        <button class="complete-btn" (click)="markAsCompleted(task.id)">
+          <i class="fas fa-check"></i> Complete
+        </button>
+      </ng-container>
+      <button class="delete-btn" (click)="deleteTask(task.id)">
+        <i class="fas fa-trash"></i> Delete
+      </button>
+    </div>
+  </li>
+</ul>
+
+<div class="pagination" *ngIf="totalCount > 0 && filteredTasks.length > 0">
+  <button 
+    (click)="goToPage(currentPage - 1)" 
+    [disabled]="currentPage === 1"
+  >
+    <i class="fas fa-chevron-left"></i> Previous
+  </button>
+  <span>Page {{ currentPage }} of {{ Math.ceil(totalCount / pageSize) }}</span>
+  <button 
+    (click)="goToPage(currentPage + 1)" 
+    [disabled]="currentPage * pageSize >= totalCount"
+  >
+    Next <i class="fas fa-chevron-right"></i>
+  </button>
+</div>
+
+<div class="no-tasks" *ngIf="filteredTasks.length === 0">
+  <p>No tasks found</p>
+  <small *ngIf="filterControl.value">Try adjusting your search</small>
+</div>
+
+  

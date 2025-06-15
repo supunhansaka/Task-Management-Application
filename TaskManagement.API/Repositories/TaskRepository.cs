@@ -4,36 +4,51 @@ using TaskManagement.API.Models;
 
 namespace TaskManagement.API.Repositories;
 
-public class TaskRepository
+public class TaskRepository : ITaskRepository
 {
-    private readonly AppDbContext _context;
+    private readonly AppDbContext _dbContext;
 
-    public TaskRepository(AppDbContext context)
+    public TaskRepository(AppDbContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
+    }
+
+    public async Task<int> GetTotalCountAsync(int userId)
+    {
+        return await _dbContext.Tasks.Where(t => t.UserId == userId).CountAsync();
+    }
+
+    public async Task<List<TaskItem>> GetAllAsync(int pageNumber, int pageSize, int userId)
+    {
+        return await _dbContext.Tasks
+            .Where(t => t.UserId == userId)
+            .OrderByDescending(t => t.UpdatedAt ?? t.CreatedAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<TaskItem>> GetAllAsync() =>
-        await _context.Tasks.ToListAsync();
+        await _dbContext.Tasks.ToListAsync();
 
     public async Task<TaskItem?> GetByIdAsync(int id) =>
-        await _context.Tasks.FindAsync(id);
+        await _dbContext.Tasks.FindAsync(id);
 
     public async Task AddAsync(TaskItem task)
     {
-        _context.Tasks.Add(task);
-        await _context.SaveChangesAsync();
+        _dbContext.Tasks.Add(task);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(TaskItem task)
     {
-        _context.Tasks.Update(task);
-        await _context.SaveChangesAsync();
+        _dbContext.Tasks.Update(task);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(TaskItem task)
     {
-        _context.Tasks.Remove(task);
-        await _context.SaveChangesAsync();
+        _dbContext.Tasks.Remove(task);
+        await _dbContext.SaveChangesAsync();
     }
 }
