@@ -303,16 +303,20 @@
         justify-content: flex-start;
         
         .filter-select {
-          width: calc(50% - 0.375rem);
+          width: calc(50% - 0.25rem);
+          min-width: 120px;
         }
       }
 
       .sort-buttons {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         width: 100%;
 
         button {
-          width: 100%;
+          width: calc(50% - 0.25rem);
+          min-width: 120px;
           justify-content: center;
         }
       }
@@ -332,21 +336,26 @@
       width: 100%;
 
       .filter-row {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         width: 100%;
 
         .filter-select {
-          width: 100%;
-          min-width: unset;
+          width: calc(50% - 0.25rem);
+          min-width: 100px;
         }
       }
 
       .sort-buttons {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
         width: 100%;
 
         button {
-          width: 100%;
+          width: calc(50% - 0.25rem);
+          min-width: 100px;
           justify-content: center;
         }
       }
