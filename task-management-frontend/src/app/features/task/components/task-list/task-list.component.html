@@ -7,14 +7,16 @@
     />
   </div>
   <div class="filter-section">
-    <select [formControl]="statusFilterControl" class="filter-select">
-      <option value="">All Statuses</option>
-      <option *ngFor="let status of taskStatuses" [value]="status">{{ status }}</option>
-    </select>
-    <select [formControl]="priorityFilterControl" class="filter-select">
-      <option value="">All Priorities</option>
-      <option *ngFor="let priority of taskPriorities" [value]="priority">{{ priority }}</option>
-    </select>
+    <div class="filter-row">
+      <select [formControl]="statusFilterControl" class="filter-select">
+        <option value="">All Statuses</option>
+        <option *ngFor="let status of taskStatuses" [value]="status">{{ status }}</option>
+      </select>
+      <select [formControl]="priorityFilterControl" class="filter-select">
+        <option value="">All Priorities</option>
+        <option *ngFor="let priority of taskPriorities" [value]="priority">{{ priority }}</option>
+      </select>
+    </div>
     <button (click)="toggleSort()">
       <i class="fas" [class.fa-sort-up]="sortAscending" [class.fa-sort-down]="!sortAscending"></i>
       Sort {{ sortAscending ? 'A-Z' : 'Z-A' }}
