@@ -71,6 +71,30 @@
           font-size: 1rem;
         }
       }
+
+      .reset-btn {
+        padding: 0.75rem 1rem;
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background-color: #5a6268;
+          transform: translateY(-1px);
+        }
+
+        i {
+          font-size: 0.875rem;
+        }
+      }
     }
 
     .sort-buttons {

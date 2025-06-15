@@ -16,6 +16,9 @@
         <option value="">All Priorities</option>
         <option *ngFor="let priority of taskPriorities" [value]="priority">{{ priority }}</option>
       </select>
+      <button class="reset-btn" (click)="resetFilters()">
+        <i class="fas fa-undo"></i> Reset All
+      </button>
     </div>
     <div class="sort-buttons">
       <button (click)="setSortField('title')" [class.active]="currentSortField === 'title'">

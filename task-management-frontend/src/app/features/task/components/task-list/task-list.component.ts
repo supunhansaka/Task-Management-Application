@@ -169,4 +169,20 @@ export class TaskListComponent implements OnInit {
       this.toastr.error('Failed to update task completion status.');
     }
   }
+
+  resetFilters() {
+    // Reset all form controls
+    this.filterControl.setValue('');
+    this.statusFilterControl.setValue('');
+    this.priorityFilterControl.setValue('');
+    
+    // Reset sorting
+    this.currentSortField = 'title';
+    this.sortAscending = true;
+    
+    // Reset pagination and reload tasks
+    this.resetPagination();
+    
+    this.toastr.success('All filters and sorting have been reset');
+  }
 }
