@@ -13,9 +13,9 @@ A full-stack Task Management System built with:
 
 ## 📁 Project Structure
 
-Task-Management-Application/
-├── TaskManagement.API/ → .NET 8 Web API project
-├── task-management-frontend/ → Angular 20 frontend
+- Task-Management-Application/
+- ├── TaskManagement.API/ → .NET 8 Web API project
+- ├── task-management-frontend/ → Angular 20 frontend
 
 ---
 
