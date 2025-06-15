@@ -35,8 +35,8 @@ Ensure you have the following installed:
 
 ### ✅ 1. Clone the repository
 
-git clone <your-repo-url>
-cd Task-Management-Application
+1. git clone <your-repo-url>
+2. cd Task-Management-Application
 
 ### ✅ 2. Run the Backend (.NET Web API)
 
@@ -53,9 +53,9 @@ Using Visual Studio
 
 ### ✅ 3. Run the Frontend (Angular 20)
 
-- cd task-management-frontend
-- npm install
-- ng serve    
+1. cd task-management-frontend
+2. npm install
+3. ng serve    
 
 
 ## 👤 Default Login Credentials
