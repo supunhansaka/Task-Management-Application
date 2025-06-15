@@ -17,10 +17,24 @@
         <option *ngFor="let priority of taskPriorities" [value]="priority">{{ priority }}</option>
       </select>
     </div>
-    <button (click)="toggleSort()">
-      <i class="fas" [class.fa-sort-up]="sortAscending" [class.fa-sort-down]="!sortAscending"></i>
-      Sort {{ sortAscending ? 'A-Z' : 'Z-A' }}
-    </button>
+    <div class="sort-buttons">
+      <button (click)="setSortField('title')" [class.active]="currentSortField === 'title'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'title' && sortAscending" [class.fa-sort-down]="currentSortField === 'title' && !sortAscending"></i>
+        Sort by Title
+      </button>
+      <button (click)="setSortField('status')" [class.active]="currentSortField === 'status'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'status' && sortAscending" [class.fa-sort-down]="currentSortField === 'status' && !sortAscending"></i>
+        Sort by Status
+      </button>
+      <button (click)="setSortField('priority')" [class.active]="currentSortField === 'priority'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'priority' && sortAscending" [class.fa-sort-down]="currentSortField === 'priority' && !sortAscending"></i>
+        Sort by Priority
+      </button>
+      <button (click)="setSortField('dueDate')" [class.active]="currentSortField === 'dueDate'">
+        <i class="fas" [class.fa-sort-up]="currentSortField === 'dueDate' && sortAscending" [class.fa-sort-down]="currentSortField === 'dueDate' && !sortAscending"></i>
+        Sort by Due Date
+      </button>
+    </div>
   </div>
 </div>
 

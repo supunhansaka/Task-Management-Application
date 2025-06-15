@@ -20,10 +20,14 @@ export class TaskListComponent implements OnInit {
   totalPages = 0;
   // tasks: TaskItem[] = [];
   sortAscending = true;
+  currentSortField: 'title' | 'status' | 'priority' | 'dueDate' = 'title';
   Math = Math;
 
   taskStatuses = TASK_STATUSES;
   taskPriorities = TASK_PRIORITIES;
+
+  private readonly statusOrder = TASK_STATUSES;
+  private readonly priorityOrder = TASK_PRIORITIES;
 
   filterControl = new FormControl('');
   statusFilterControl = new FormControl('');
@@ -88,11 +92,50 @@ export class TaskListComponent implements OnInit {
 
   toggleSort() {
     this.sortAscending = !this.sortAscending;
-    this.tasks.sort((a, b) =>
-      this.sortAscending
-        ? a.title.localeCompare(b.title)
-        : b.title.localeCompare(a.title)
-    );
+    this.sortTasks();
+  }
+
+  setSortField(field: 'title' | 'status' | 'priority' | 'dueDate') {
+    if (this.currentSortField === field) {
+      this.sortAscending = !this.sortAscending;
+    } else {
+      this.currentSortField = field;
+      this.sortAscending = true;
+    }
+    this.sortTasks();
+  }
+
+  private sortTasks() {
+    switch (this.currentSortField) {
+      case 'title':
+        this.tasks.sort((a, b) =>
+          this.sortAscending
+            ? a.title.localeCompare(b.title)
+            : b.title.localeCompare(a.title)
+        );
+        break;
+      case 'status':
+        this.tasks.sort((a, b) => {
+          const aIndex = this.statusOrder.indexOf(a.status);
+          const bIndex = this.statusOrder.indexOf(b.status);
+          return this.sortAscending ? aIndex - bIndex : bIndex - aIndex;
+        });
+        break;
+      case 'priority':
+        this.tasks.sort((a, b) => {
+          const aIndex = this.priorityOrder.indexOf(a.priority);
+          const bIndex = this.priorityOrder.indexOf(b.priority);
+          return this.sortAscending ? aIndex - bIndex : bIndex - aIndex;
+        });
+        break;
+      case 'dueDate':
+        this.tasks.sort((a, b) => {
+          const dateA = new Date(a.dueDate).getTime();
+          const dateB = new Date(b.dueDate).getTime();
+          return this.sortAscending ? dateA - dateB : dateB - dateA;
+        });
+        break;
+    }
   }
 
   get filteredTasks() {
