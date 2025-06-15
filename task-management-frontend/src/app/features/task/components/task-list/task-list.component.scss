@@ -3,35 +3,64 @@
   justify-content: space-between;
   margin-bottom: 1.5rem;
   gap: 1rem;
+  flex-wrap: wrap;
 
-  input {
+  .search-section {
     flex: 1;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 1rem;
-    transition: all 0.2s ease-in-out;
+    min-width: 200px;
 
-    &:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-      outline: none;
-    }
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: all 0.2s ease-in-out;
 
-    &::placeholder {
-      color: #adb5bd;
+      &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #adb5bd;
+      }
     }
   }
 
-  button {
-    padding: 0.75rem 1.5rem;
-    white-space: nowrap;
+  .filter-section {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 
-    i {
-      font-size: 0.875rem;
+    .filter-select {
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 1rem;
+      background-color: white;
+      min-width: 150px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        outline: none;
+      }
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      i {
+        font-size: 0.875rem;
+      }
     }
   }
 }
@@ -225,13 +254,22 @@
   .task-list-header {
     flex-direction: column;
 
-    input {
+    .search-section {
       width: 100%;
     }
 
-    button {
+    .filter-section {
       width: 100%;
-      justify-content: center;
+      flex-direction: column;
+
+      .filter-select {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+        justify-content: center;
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { TaskItem } from '../../interfaces/task';
 import { ToastrService } from 'ngx-toastr';
+import { TASK_PRIORITIES, TASK_STATUSES } from '../../enums/task.enums';
 
 @Component({
   standalone: true,
@@ -19,9 +20,15 @@ export class TaskListComponent implements OnInit {
   totalPages = 0;
   // tasks: TaskItem[] = [];
   sortAscending = true;
-  Math = Math; // Add Math for template use
+  Math = Math;
+
+  taskStatuses = TASK_STATUSES;
+  taskPriorities = TASK_PRIORITIES;
 
   filterControl = new FormControl('');
+  statusFilterControl = new FormControl('');
+  priorityFilterControl = new FormControl('');
+
   @Input() tasks: TaskItem[] = [];
   @Output() taskSelected = new EventEmitter<TaskItem>();
   @Output() refresh = new EventEmitter<void>();
@@ -31,10 +38,23 @@ export class TaskListComponent implements OnInit {
   async ngOnInit() {
     await this.loadTasks();
 
-    // Optional → live filter
+    // Subscribe to all filter changes
     this.filterControl.valueChanges.subscribe(() => {
-      // trigger change detection if needed (or use getter)
+      this.resetPagination();
     });
+
+    this.statusFilterControl.valueChanges.subscribe(() => {
+      this.resetPagination();
+    });
+
+    this.priorityFilterControl.valueChanges.subscribe(() => {
+      this.resetPagination();
+    });
+  }
+
+  private resetPagination() {
+    this.currentPage = 1;
+    this.loadTasks();
   }
 
   async loadTasks() {
@@ -76,10 +96,21 @@ export class TaskListComponent implements OnInit {
   }
 
   get filteredTasks() {
-    const filter = this.filterControl.value?.toLowerCase() || '';
-    return this.tasks.filter(task =>
-      task.title.toLowerCase().includes(filter)
-    );
+    const searchFilter = this.filterControl.value?.toLowerCase() || '';
+    const statusFilter = this.statusFilterControl.value || '';
+    const priorityFilter = this.priorityFilterControl.value || '';
+
+    return this.tasks.filter(task => {
+      const matchesSearch = 
+        task.title.toLowerCase().includes(searchFilter) ||
+        task.status.toLowerCase().includes(searchFilter) ||
+        task.priority.toLowerCase().includes(searchFilter);
+      
+      const matchesStatus = !statusFilter || task.status === statusFilter;
+      const matchesPriority = !priorityFilter || task.priority === priorityFilter;
+
+      return matchesSearch && matchesStatus && matchesPriority;
+    });
   }
 
   onEdit(task: TaskItem) {
